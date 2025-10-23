@@ -1,0 +1,24 @@
+#include<bits/stdc++.h>
+using namespace std;
+void selectionSort (int a[],int n){
+int i,j,min;
+for (i=0;i<n-1;i++){
+min=i;
+for(j=i+1;j<n;j++)
+if (a[j] <a[min])
+min=j;
+swap(&a[min],&a[i]);
+}
+}
+int main(){
+int a[100],n;
+cin>>n;
+for(int i=0;i<n;i++){
+cin>>n;
+}
+selectionSort(a,n);
+for(int i=0;i<n;i++){
+cout<<a[i]<<" ";
+}
+return 0;
+}
