@@ -1,44 +1,26 @@
 #include <iostream>
-
-
-void insertionSort(int arr[], int n) {
-    for (int i = 1; i < n; i++) {
-        int key = arr[i]; // Phần tử cần chèn
-        int j = i - 1;
-        
-        // Di chuyển các phần tử lớn hơn key về sau 1 vị trí
-        while (j >= 0 && arr[j] > key) {
-            arr[j + 1] = arr[j];
-            j--;
-        }
-        arr[j + 1] = key; // Chèn key vào vị trí đúng
-    }
+using namespace std;
+void insertionSort(int a[], int n) {
+for (int i = 1; i < n; i++) {
+int x = a[i];
+int j = i - 1;
+while (j >= 0 && a[j-1] > x) {
+a[j + 1] = arr[j];
+j--;
 }
-
-void printArray(int arr[], int n) {
-    for (int i = 0; i < n; i++)
-        cout << arr[i] << " ";
-    cout << endl;
+a[j + 1] = x;
+}
 }
 
 int main() {
-    int n;
-    cout << "Nhập số lượng phần tử: ";
-    cin >> n;
-    
-    int arr[n];
-    cout << "Nhập " << n << " phần tử: ";
-    for (int i = 0; i < n; i++) {
-        cin >> arr[i];
-    }
-    
-    cout << "Mảng ban đầu: ";
-    printArray(arr, n);
-    
-    insertionSort(arr, n);
-    
-    cout << "Mảng sau khi sắp xếp: ";
-    printArray(arr, n);
-    
-    return 0;
+int a[100],n;
+cin >> n;
+for (int i = 0; i < n; i++) {
+cin >> a[i];
+}
+insertionSort(a, n);
+for (int i = 0; i < n; i++) {
+cout<<a[i]<<" ";
+}
+return 0;
 }
