@@ -2,9 +2,63 @@
 #include <algorithm>
 using namespace std;
 
-void print(int a[],int n){
-    for(int i=0;i<n;i++){
-        cout<<a[i]<<" ";
+void print(int a[], int n) {
+    for (int i = 0; i < n; i++) {
+        cout << a[i] << " ";
     }
-    cout<<endl;
+    cout << endl;
 }
+
+void mergeArrays(int a[], int m, int n, int p, int totalSize) {
+    int i = m, j = n + 1;
+    while (i < j && j <= p) {
+        if (a[i] <= a[j]) {
+            i++;
+        } else {
+            int x = a[j];
+            for (int k = j - 1; k >= i; k--) {
+                a[k + 1] = a[k];
+            }
+            a[i] = x;
+            i++;
+            j++;
+            print(a, totalSize);
+        }
+    }
+}
+
+void Split_Merg(int a[], int l, int r, int totalSize) {
+    if (l >= r) return;
+    
+    int m = (l + r) / 2;
+    
+    Split_Merg(a, l, m, totalSize);
+    Split_Merg(, m + 1, r, totalSize);
+    
+    MergeArrays(a, l, m, r, totalSize);
+}
+
+void MergeSort(int a[], int n) {
+    if (n < 2) return;
+    
+    print(a, n);
+    Split_Merg(a, 0, n - 1, n);
+}
+
+int main() {
+    int a[100], n;
+    cin >> n;
+    for (int i = 0; i < n; i++) {
+        cin >> a[i];
+    }
+    MergeSort(a, n);
+    return 0;
+}
+32 51 27 83 66 11 45 75 
+32 51 27 83 66 11 45 75 
+27 32 51 83 66 11 45 75 
+27 32 51 83 66 11 45 75 
+27 32 51 83 11 66 45 75 
+27 32 51 83 11 66 45 75 
+27 32 51 83 11 45 66 75 
+11 27 32 45 51 66 75 83 
