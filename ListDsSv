@@ -1,0 +1,102 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Struct SinhVien
+struct SinhVien {
+    string hoten;
+    string mssv;
+    int namsinh;
+    double gpa;
+};
+
+// Node danh sach lien ket
+struct Node {
+    SinhVien data;
+    Node* next;
+};
+
+typedef Node* node;
+
+// Struct danh sach
+struct List {
+    node firstNode = nullptr;
+};
+
+// Ham nhap 1 sinh vien
+SinhVien nhapSV() {
+    SinhVien sv;
+    cout << "Nhap ho ten: ";
+    getline(cin, sv.hoten);
+    cout << "Nhap MSSV: ";
+    cin >> sv.mssv;
+    cout << "Nhap nam sinh: ";
+    cin >> sv.namsinh;
+    cout << "Nhap GPA: ";
+    cin >> sv.gpa;
+    cin.ignore();
+    return sv;
+}
+
+// In danh sach
+void inDs(const List &list) {
+    node tmp = list.firstNode;
+    int i = 1;
+    if (!tmp) {
+        cout << "Danh sach rong.\n";
+        return;
+    }
+    while (tmp) {
+        cout << "Sinh vien " << i << ":\n";
+        cout << "Ho ten: " << tmp->data.hoten << "\n";
+        cout << "MSSV: " << tmp->data.mssv << "\n";
+        cout << "Nam sinh: " << tmp->data.namsinh << "\n";
+        cout << "GPA: " << tmp->data.gpa << "\n\n";
+        tmp = tmp->next;
+        i++;
+    }
+}
+
+// Đem sinh vien GPA > 3.2
+int demGPAHon3_2(const List &list) {
+    int dem = 0;
+    node tmp = list.firstNode;
+    while (tmp) {
+        if (tmp->data.gpa > 3.2) dem++;
+        tmp = tmp->next;
+    }
+    return dem;
+}
+
+// Tinh chieu dai danh sach
+int chieuDaiDs(const List &list) {
+    int count = 0;
+    node tmp = list.firstNode;
+    while (tmp) {
+        count++;
+        tmp = tmp->next;
+    }
+    return count;
+}
+
+// Sap xep danh sach theo GPA tang dan
+void sapXepDs(List &list) {
+    for (node p = list.firstNode; p && p->next; p = p->next) {
+        node min = p;
+        for (node q = p->next; q; q = q->next) {
+            if (q->data.gpa < min->data.gpa) {
+                min = q;
+            }
+        }
+        SinhVien temp = min->data;
+        min->data = p->data;
+        p->data = temp;
+    }
+}
+
+// Them sinh vien vao dau danh sach
+void themSvVaoDau(List &list, SinhVien sv) {
+    node temp = new Node{sv, NULL};
+    temp->next = list.firstNode;
+    list.firstNode = temp;    
+}
