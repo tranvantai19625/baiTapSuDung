@@ -3,7 +3,7 @@
 using namespace std;
 
 // Struct SinhVien
-struct SinhVien {
+struct sinhVien {
     string hoten;
     string mssv;
     int namsinh;
@@ -12,7 +12,7 @@ struct SinhVien {
 
 // Node danh sach lien ket
 struct Node {
-    SinhVien data;
+    sinhVien data;
     Node* next;
 };
 
@@ -24,8 +24,8 @@ struct List {
 };
 
 // Ham nhap 1 sinh vien
-SinhVien nhapSV() {
-    SinhVien sv;
+sinhVien nhapSV() {
+    sinhVien sv;
     cout << "Nhap ho ten: ";
     getline(cin, sv.hoten);
     cout << "Nhap MSSV: ";
@@ -39,64 +39,131 @@ SinhVien nhapSV() {
 }
 
 // In danh sach
-void inDs(const List &list) {
-    node tmp = list.firstNode;
-    int i = 1;
-    if (!tmp) {
+void inDs(List* list) {
+    node p = list->firstNode;
+    if (!p) {
         cout << "Danh sach rong.\n";
         return;
     }
-    while (tmp) {
-        cout << "Sinh vien " << i << ":\n";
-        cout << "Ho ten: " << tmp->data.hoten << "\n";
-        cout << "MSSV: " << tmp->data.mssv << "\n";
-        cout << "Nam sinh: " << tmp->data.namsinh << "\n";
-        cout << "GPA: " << tmp->data.gpa << "\n\n";
-        tmp = tmp->next;
-        i++;
+    cout<<"Ho ten\tMa sinh vien\tNam sinh\tGPA\n";
+    while (p) {
+        cout <<p->data.hoten << "\t"
+             <<p->data.mssv << "\t"
+             <<p->data.namsinh << "\t"
+             <<p->data.gpa << "\n";
+        p = p->next;
     }
 }
 
 // Đem sinh vien GPA > 3.2
-int demGPAHon3_2(const List &list) {
+int demgpahon3_2(List* list) {
     int dem = 0;
-    node tmp = list.firstNode;
-    while (tmp) {
-        if (tmp->data.gpa > 3.2) dem++;
-        tmp = tmp->next;
+    node p = list->firstNode;
+    while (p!=nullptr) {
+        if (p->data.gpa > 3.2) dem++;
+        p = p->next;
     }
     return dem;
 }
 
 // Tinh chieu dai danh sach
-int chieuDaiDs(const List &list) {
-    int count = 0;
-    node tmp = list.firstNode;
-    while (tmp) {
-        count++;
-        tmp = tmp->next;
+int chieudaiDs(List* list) {
+    int dem = 0;
+    node p = list->firstNode;
+    while (p!=nullptr) {
+        dem++;
+        p = p->next;
     }
-    return count;
+    return dem;
 }
 
 // Sap xep danh sach theo GPA tang dan
-void sapXepDs(List &list) {
-    for (node p = list.firstNode; p && p->next; p = p->next) {
+void sapXep(List* list) {
+    for (node p = list->firstNode; p && p->next; p = p->next) {
         node min = p;
         for (node q = p->next; q; q = q->next) {
             if (q->data.gpa < min->data.gpa) {
                 min = q;
             }
         }
-        SinhVien temp = min->data;
+        sinhVien x = min->data;
         min->data = p->data;
-        p->data = temp;
+        p->data = x;
     }
 }
 
 // Them sinh vien vao dau danh sach
-void themSvVaoDau(List &list, SinhVien sv) {
-    node temp = new Node{sv, NULL};
-    temp->next = list.firstNode;
-    list.firstNode = temp;    
+void themvaodauDs(List*list, sinhVien sv) {
+    node p = new Node{sv, nullptr};
+    p->next = list->firstNode;
+    list->firstNode = p;    
+}
+
+// Tao node moi
+node createNode(sinhVien sv){
+    node p= new Node;
+    p->data=sv;
+    p->next=nullptr;
+    return p;
+}
+
+// Tim sinh vien theo ten
+bool timten(List* list, string name){
+    node p= list->firstNode;
+    while(p!=nullptr){
+        if(p->data.hoten== name)
+        return true;
+    }
+    p=p->next;
+    return false;
+}
+
+int main(){
+    List list;
+    list->firstNode== nullptr;
+    While(1){
+        cout<<"1. Nhap sinh vien vao danh sach\n";
+        cout<<"2. Tinh chieu dai danh sach\n";
+        cout<<"3. So sinh vien có gpa > 3.2\n";
+        cout<<"4. In danh sach\n";
+        cout<<"5. Tim ten sinh vien trong danh sach\n";
+        cout<<"6. Sap xep sinh vien theo thu tu gpa tang dan\n";
+        cout<<"7. Them 1 sinh vien vao dau danh sach\n";
+        cout<<"Nhap lua chon:";
+        int lc;
+        cin>>lc;
+        if(lc==1){
+            int n;
+            cout<<"Nhap so luong sinh vien: ";
+            cin>>n;
+            for (int i=0;i<n;i++){
+                cout<<"\nNhap sinh vien thu"<<i+1<<":\n";
+                sinhVien sv = nhapSV();
+            }
+        }
+        else if(lc==2){
+            chieudaiDs(&list);
+        }
+        else if(lc==3){
+            demgpahon3_2(&list);
+        }
+        else if(lc==4){
+            inDs(&list);
+        }
+        else if(lc==5){
+            string name;
+            cout<<"Nhap ten can tim:\n";
+            getline(cin,name);
+            if(timten(&list,ten))
+            cout<< "Danh sach co sinh vien ten:"<<name<<endl;
+            else
+            cout<<"Danh sach khong co sinh vien ten:"<<name<<endl;
+        }
+        else if(lc==6){
+            sapXep(&list);
+        }
+        else if(lc==7){
+            themvaodauDs(&list,sv);
+        }
+    }
 }
